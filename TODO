@@ -1,0 +1,16 @@
+* Main executable
+* Basic webserver (hello world)
+* CLI options/config (output on startup)
+  * port to listen on (defaults to 6666)
+  * bind address (defaults to 0.0.0.0)
+  * path (defaults to /kill)
+  * PID(s) to kill (defaults to 1)
+  * Names to kill (no default)
+  * Signals
+    * Comma delimited list of signals to send to the process
+      in order (default to TERM and then KILL)
+  * Delay
+    * Amount of time to wait between signals (default to 20
+      seconds)
+  * Suicide flag - kill self after killing other processes.
+* Kill processes using config
