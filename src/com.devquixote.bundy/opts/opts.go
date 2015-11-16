@@ -1,4 +1,8 @@
-package cli
+package opts
+
+import (
+    "strconv"
+)
 
 type Options struct {
     Address string `short:"a" long:"address" default:"0.0.0.0" description:"Network address to bind to"`
@@ -7,4 +11,8 @@ type Options struct {
     Signals []string `short:"s" long:"signals" default:"TERM" default:"KILL" description:"Signals to send in order"`
     Delay int `short:"d" long:"delay" default:"20" description:"Seconds to wait between signals"`
     Suicide bool `short:"S" long:"suicide" default:"true" description:"If bundy should kill itself after killing the target process"`
+}
+
+func (opts *Options) AddressAndPort() string {
+    return opts.Address + ":" + strconv.Itoa(opts.Port)
 }

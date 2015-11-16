@@ -1,4 +1,4 @@
-package cli
+package opts
 
 import (
     "testing"
@@ -33,5 +33,14 @@ func TestDefaultOptions(t *testing.T) {
     }
     if !opts.Suicide {
         t.Errorf(errorMsg, true, "Suicide", opts.Suicide)
+    }
+}
+
+func TestAddressAndPort(t *testing.T) {
+    opts := Options{}
+    opts.Address = "0.0.0.0"
+    opts.Port = 6666
+    if opts.AddressAndPort() != "0.0.0.0:6666" {
+        t.Errorf(errorMsg, "0.0.0.0:6666", "AddressAndPort", opts.AddressAndPort())
     }
 }
