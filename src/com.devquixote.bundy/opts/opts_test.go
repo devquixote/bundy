@@ -3,6 +3,7 @@ package opts
 import (
     "testing"
     "reflect"
+    "syscall"
     "github.com/jessevdk/go-flags"
 )
 
@@ -42,5 +43,14 @@ func TestAddressAndPort(t *testing.T) {
     opts.Port = 6666
     if opts.AddressAndPort() != "0.0.0.0:6666" {
         t.Errorf(errorMsg, "0.0.0.0:6666", "AddressAndPort", opts.AddressAndPort())
+    }
+}
+
+func TestConvertedSignals(t *testing.T) {
+    opts := Options{}
+    opts.Signals = []string{"TERM","KILL"}
+    expected := []syscall.Signal{syscall.SIGTERM,syscall.SIGKILL}
+    if !reflect.DeepEqual(opts.ConvertedSignals(), expected) {
+        t.Error(errorMsg, expected, "ConvertedSignals", opts.ConvertedSignals())
     }
 }

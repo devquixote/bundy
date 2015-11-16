@@ -2,7 +2,14 @@ package opts
 
 import (
     "strconv"
+    "syscall"
 )
+
+var signalMap = map[string]syscall.Signal{
+    "TERM": syscall.SIGTERM,
+    "KILL": syscall.SIGKILL,
+    // TODO expand this
+}
 
 type Options struct {
     Address string `short:"a" long:"address" default:"0.0.0.0" description:"Network address to bind to"`
@@ -15,4 +22,12 @@ type Options struct {
 
 func (opts *Options) AddressAndPort() string {
     return opts.Address + ":" + strconv.Itoa(opts.Port)
+}
+
+func (opts *Options) ConvertedSignals() []syscall.Signal {
+    var result []syscall.Signal = []syscall.Signal{}
+    for _, sigName := range opts.Signals {
+        result = append(result, signalMap[sigName])
+    }
+    return result
 }
